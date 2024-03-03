@@ -14,6 +14,7 @@ print("output=",out)
 
 /////Practical 1 b: Calculate the output of neural net using both binary and bipolar
 sigmoidal function
+solve this x1=0.3,x2=o.5, x3=0.6, to Y = x1 0.2, x2 0.1, x3 -0.3,
 Code :
 # number of elements as input
 n = int(input("Enter number of elements : "))
@@ -42,6 +43,11 @@ for i in range(0, n):
 Yin.append(inputs[i]*weights[i])
 print(round(sum(Yin),3))
 Output :
+//enter the numbe of element :3
+//enter the outputs:0.3, 0.5, 0.6
+//enter the wieghts:0.2, 0.1,-0.3
+The net input can be calculated as Yin =x1w1, x2w2,x3w3
+-0.07
 
 
 
@@ -87,8 +93,30 @@ ele= 0
 Y.append(ele)
 print("Y = ",Y)
 Output :
+enter the number of inputs:4
+for the inputs calculate the net input using yin= x1w1 + x2w2
+x1=0
+x2=0
+x1=0
+x2=1
+x1=1
+x2=0
+x1=1
+x2=1
+
+x1=[0,0,1,1]
+x2=[0,1,0,1]
+Yin=[0,1,1,2]
+after assuming one wieght as expected and the other as inhibitory Yin=[0,1,-1,0]
+Y=[0,1,0,0]
+In [14]
 
 ///Practical 2 b: Generate XOR function using McCulloch-Pitts neural net
+t=0\        /t=1.9\
+    \      /        \
+     \    /           \t=0
+     /    \          /
+t=0 /      \t=0    /
 #Getting weights and threshold value
 
 import numpy as np
@@ -162,6 +190,18 @@ print("Threshold value")
 print(theta)
 Output :
 
+enter wieghts
+wieghts w11=1
+wieghts w12=-1
+wieghts w21=-1
+wieghts w22=1
+wieghts v1=1
+wieghts v2=1
+enter threshold value
+theta=1
+
+
+
 ////Practical 3 a: Write a program to implement Hebb’s rule
 import numpy as np
 #first pattern
@@ -192,6 +232,8 @@ b=b+y[1]
 print("new wt =", wtnew)
 print("Bias value",b)
 Output :
+first input with target=1
+
 
 Practical 3 b: Write a program to implement of delta rule
 #supervised learning
@@ -228,6 +270,18 @@ print("Corrected weights",weights)
 print("actual",actual)
 print("desired",desired)
 Output :
+initial inputs:1
+initial inputs:1
+initial inputs:1
+initial wieghts:1
+initial wieghts:1
+initial wieghts:1
+desire output:2
+desire output:3
+desire output:4
+enter learning rate:1
+
+
 
 ////Practical 4 a: Write a program for Back Propagation Algorithm
 import numpy as np
@@ -309,6 +363,12 @@ w[0]=w[0]+dw0
 print("w=",w)
 print("bias b1=",b1, " b2=",b2)
 Output :
+z1=0.2
+calculate net input to z2 layer
+z2=0.9
+
+
+
 
 ////Practical 4 b: Write a Program For Error Back Propagation Algorithm (Ebpa)
 Learning
@@ -336,6 +396,12 @@ print("The uploaded weight of second n/w w21= ",w21)
 print("The updated base of first n/w b10=",b10)
 print("The updated base of second n/w b20= ",b20)
 Output :
+enter wight first network;12
+enter base first network;35
+enter wight second network;12
+enter base first network;12
+enter learning coeefiecnt;11
+
 
 
 /////Practical 5 a: Write a program for Hopfield Network.
