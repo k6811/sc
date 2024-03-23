@@ -1,16 +1,17 @@
 /////Practical 1 a: Design a simple linear neural network model.
-x=float(input("Enter value of x:"))
-w=float(input("Enter value of weight w:"))
-b=float(input("Enter value of bias b:"))
-net = int(w*x+b)
-if(net<0):
-out=0
-elif((net>=0)&(net<=1)):
-out =net
+x = float(input("Enter value of x: "))
+w = float(input("Enter value of weight w: "))
+b = float(input("Enter value of bias b: "))
+net = int(w * x + b)
+if (net < 0):
+    out = 0
+elif ((net >= 0) & (net <= 1)):
+    out = net
 else:
-out=1
-print("net=",net)
-print("output=",out)
+    out = 1
+print("net=", net)
+print("output=", out)
+
 
 /////Practical 1 b: Calculate the output of neural net using both binary and bipolar
 sigmoidal function
@@ -49,10 +50,36 @@ Output :
 The net input can be calculated as Yin =x1w1, x2w2,x3w3
 -0.07
 
+////OR////
+# number of elements as input
+n = int(input("Enter number of elements : "))
+# In[2]:
+print("Enter the inputs")
+inputs = []  # creating an empty list for inputs
+# iterating till the range
+for i in range(0, n):
+    ele = float(input())
+    inputs.append(ele)  # adding the element
+print(inputs)
+# In[3]:
+print("Enter the weights")
+weights = []  # creating an empty list for weights
+# iterating till the range
+for i in range(0, n):
+    ele = float(input())
+    weights.append(ele)  # adding the element
+print(weights)
+# In[4]:
+print("The net input can be calculated as Yin = x1w1 + x2w2 + x3w3")
+# In[5]:
+Yin = []
+for i in range(0, n):
+    Yin.append(inputs[i] * weights[i])
+print(round(sum(Yin), 3))
 
 
 ///////Practical 2 a: Implement AND/NOT function using McCulloch-Pits neuron (use binary data
-representation).
+///representation)./////
 Code:
 # enter the no of inputs
 num_ip = int(input("Enter the number of inputs : "))
@@ -110,6 +137,49 @@ Yin=[0,1,1,2]
 after assuming one wieght as expected and the other as inhibitory Yin=[0,1,-1,0]
 Y=[0,1,0,0]
 In [14]
+
+
+///or///
+# enter the no of inputs
+num_ip = int(input("Enter the number of inputs: "))
+# Set the weights with value 1
+w1 = 1
+w2 = 1
+print("For the ", num_ip, " inputs calculate the net input using yin = x1w1 + x2w2")
+x1 = []
+x2 = []
+for j in range(0, num_ip):
+    ele1 = int(input("x1 = "))
+    ele2 = int(input("x2 = "))
+    x1.append(ele1)
+    x2.append(ele2)
+print("x1 = ", x1)
+print("x2 = ", x2)
+
+n = [xi * w1 for xi in x1]
+m = [xi * w2 for xi in x2]
+Yin = []
+for i in range(0, num_ip):
+    Yin.append(n[i] + m[i])
+print("Yin = ", Yin)
+
+# Assume one weight as excitatory and the other as inhibitory, i.e.,
+Yin = []
+for i in range(0, num_ip):
+    Yin.append(n[i] - m[i])
+print("After assuming one weight as excitatory and the other as inhibitory Yin = ", Yin)
+
+# From the calculated net inputs, now it is possible to fire the neuron for input (1, 0)
+# only by fixing a threshold of 1, i.e., θ ≥ 1 for Y unit.
+# Thus, w1 = 1, w2 = -1; θ ≥ 1
+Y = []
+for i in range(0, num_ip):
+    if Yin[i] >= 1:
+        ele = 1
+    else:
+        ele = 0
+    Y.append(ele)
+print("Y = ", Y)
 
 ///Practical 2 b: Generate XOR function using McCulloch-Pitts neural net
 t=0\        /t=1.9\
@@ -200,6 +270,86 @@ wieghts v2=1
 enter threshold value
 theta=1
 
+/////or/////
+import numpy as np
+
+print('Enter weights')
+w11 = int(input('Weight w11='))
+w12 = int(input('weight w12='))
+w21 = int(input('Weight w21='))
+w22 = int(input('weight w22='))
+v1 = int(input('weight v1='))
+v2 = int(input('weight v2='))
+
+print('Enter Threshold Value')
+theta = int(input('theta='))
+
+x1 = np.array([0, 0, 1, 1])
+x2 = np.array([0, 1, 0, 1])
+z = np.array([0, 1, 1, 0])
+
+con = 1
+y1 = np.zeros((4,))
+y2 = np.zeros((4,))
+y = np.zeros((4,))
+
+while con == 1:
+    zin1 = np.zeros((4,))
+    zin2 = np.zeros((4,))
+    zin1 = x1 * w11 + x2 * w21
+    zin2 = x1 * w21 + x2 * w22
+    print("z1", zin1)
+    print("z2", zin2)
+
+    for i in range(0, 4):
+        if zin1[i] >= theta:
+            y1[i] = 1
+        else:
+            y1[i] = 0
+        if zin2[i] >= theta:
+            y2[i] = 1
+        else:
+            y2[i] = 0
+
+    yin = np.array([])
+    yin = y1 * v1 + y2 * v2
+
+    for i in range(0, 4):
+        if yin[i] >= theta:
+            y[i] = 1
+        else:
+            y[i] = 0
+
+    print("yin", yin)
+    print('Output of Net')
+    y = y.astype(int)
+    print("y", y)
+    print("z", z)
+
+    if np.array_equal(y, z):
+        con = 0
+    else:
+        print("Net is not learning, enter another set of weights and Threshold value")
+        w11 = int(input("Weight w11="))
+        w12 = int(input("weight w12="))
+        w21 = int(input("Weight w21="))
+        w22 = int(input("weight w22="))
+        v1 = int(input("weight v1="))
+        v2 = int(input("weight v2="))
+        theta = int(input("theta="))
+
+print("McCulloch-Pitts Net for XOR function")
+print("Weights of Neuron Z1")
+print(w11)
+print(w21)
+print("weights of Neuron Z2")
+print(w12)
+print(w22)
+print("weights of Neuron Y")
+print(v1)
+print(v2)
+print("Threshold value")
+print(theta)
 
 
 ////Practical 3 a: Write a program to implement Hebb’s rule
@@ -233,6 +383,37 @@ print("new wt =", wtnew)
 print("Bias value",b)
 Output :
 first input with target=1
+
+////or////
+import numpy as np
+
+# first pattern
+x1 = np.array([1, 1, 1, -1, 1, -1, 1, 1, 1])
+# second pattern
+x2 = np.array([1, 1, 1, 1, -1, 1, 1, 1, 1])
+# initialize bias value
+b = 0
+# define target
+y = np.array([1, -1])
+wtold = np.zeros((9,))
+wtnew = np.zeros((9,))
+wtnew = wtnew.astype(int)
+wtold = wtold.astype(int)
+bias = 0
+print("First input with target = 1")
+for i in range(0, 9):
+    wtold[i] = wtold[i] + x1[i] * y[0]
+wtnew = wtold
+b = b + y[0]
+print("new wt =", wtnew)
+print("Bias value", b)
+
+print("Second input with target = -1")
+for i in range(0, 9):
+    wtnew[i] = wtold[i] + x2[i] * y[1]
+b = b + y[1]
+print("new wt =", wtnew)
+print("Bias value", b)
 
 
 Practical 3 b: Write a program to implement of delta rule
@@ -281,6 +462,49 @@ desire output:3
 desire output:4
 enter learning rate:1
 
+////or////
+# supervised learning
+import numpy as np
+import time
+
+np.set_printoptions(precision=2)
+
+x = np.zeros((3,))
+weights = np.zeros((3,))
+desired = np.zeros((3,))
+actual = np.zeros((3,))
+
+for i in range(0, 3):
+    x[i] = float(input("Initial inputs:"))
+
+for i in range(0, 3):
+    weights[i] = float(input("Initial weights:"))
+
+for i in range(0, 3):
+    desired[i] = float(input("Desired output:"))
+
+a = float(input("Enter learning rate:"))
+
+actual = x * weights
+print("actual", actual)
+print("desired", desired)
+
+while True:
+    if np.array_equal(desired, actual):
+        break  # no change
+    else:
+        for i in range(0, 3):
+            weights[i] = weights[i] + a * (desired[i] - actual[i])
+            actual = x * weights
+        print("weights", weights)
+        print("actual", actual)
+        print("desired", desired)
+        print("*" * 30)
+
+print("Final output")
+print("Corrected weights", weights)
+print("actual", actual)
+print("desired", desired)
 
 
 ////Practical 4 a: Write a program for Back Propagation Algorithm
